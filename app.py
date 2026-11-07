@@ -30,8 +30,31 @@ st.markdown(
     html, body, [class*="css"] { font-family: "DM Sans", sans-serif; }
     h1, h2, h3 { font-family: "DM Serif Display", serif; letter-spacing: 0; }
     .stApp { background: linear-gradient(135deg, #f8faf8 0%, #edf4f1 55%, #f8f3eb 100%); }
-    [data-testid="stSidebar"] { background: #173d36; }
-    [data-testid="stSidebar"] * { color: #f7fbf9; }
+    [data-testid="stSidebar"] { background: #173d36; color: #f7fbf9; }
+    [data-testid="stSidebar"] h2,
+    [data-testid="stSidebar"] label,
+    [data-testid="stSidebar"] [data-testid="stCaptionContainer"] { color: #f7fbf9; }
+    [data-testid="stSidebar"] [data-baseweb="select"] > div { background: #f7fbf9; }
+    [data-testid="stSidebar"] [data-baseweb="select"] * { color: #173d36; }
+    [data-testid="stSidebar"] [data-testid="stSelectbox"] [role="group"] {
+        background: #f7fbf9;
+        border-color: #b8cbc5;
+    }
+    [data-testid="stSidebar"] [data-testid="stSelectbox"] [role="group"] * { color: #173d36; }
+    [data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] { background: #f7fbf9; }
+    [data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] * { color: #173d36; }
+    [data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] button {
+        background: #c24f32;
+        border-color: #c24f32;
+        color: #ffffff;
+    }
+    [data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] button * { color: inherit; }
+    [data-testid="stSidebar"] .stDownloadButton button {
+        background: #f7fbf9;
+        border-color: #b8cbc5;
+        color: #173d36;
+    }
+    [data-testid="stSidebar"] .stDownloadButton button * { color: inherit; }
     [data-testid="stMetric"] { background: #ffffff; border: 1px solid #dbe5e1; border-radius: 6px; padding: 14px; }
     .eyebrow { color: #c24f32; font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
     .subtitle { color: #47615b; max-width: 760px; font-size: 1.05rem; }
