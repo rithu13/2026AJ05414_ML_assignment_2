@@ -28,7 +28,7 @@ The 30 input variables describe the mean, standard error, and worst value of ten
 
 ## C. GitHub Repository Link
 
-**Repository:** [ADD_GITHUB_REPOSITORY_LINK]
+**Repository:** https://github.com/rithu13/2026AJ05414_ML_assignment_2
 
 ## D. Models Used
 
@@ -57,7 +57,7 @@ All models use the same stratified hold-out test set. Logistic Regression, KNN, 
 
 ## Live Streamlit App
 
-**Application:** [ADD_STREAMLIT_APP_LINK]
+**Application:** https://2026aj05414.streamlit.app/
 
 The application provides:
 
@@ -98,19 +98,10 @@ streamlit run app.py
 
 Open `http://localhost:8501`, upload `test_data.csv`, and choose a model. Running `train_models.py` recreates every saved model, metric, and the test file from the fixed stratified split.
 
-## Deployment
-
-1. Push this folder to a public GitHub repository.
-2. Sign in to [Streamlit Community Cloud](https://streamlit.io/cloud) with GitHub.
-3. Create an app from the repository's main branch.
-4. Set the entry point to `app.py`.
-5. Deploy and replace both link placeholders in this README.
-
 ## Author
 
-**Name:** [ADD_NAME]  
+**Name:** Rithika A
 **BITS ID:** 2026AJ05414  
-**Course:** M.Tech (AIML) - Machine Learning
 
 ## References
 
