@@ -5,6 +5,8 @@ import json
 
 import joblib
 import pandas as pd
+
+# Scikit-learn packages a reproducible copy of the UCI Wisconsin Diagnostic dataset.
 from sklearn.datasets import load_breast_cancer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import (
@@ -45,6 +47,7 @@ def prediction_scores(model, features):
     """Return continuous positive-class scores for AUC calculation."""
     if hasattr(model, "predict_proba"):
         return model.predict_proba(features)[:, 1]
+    # SVC exposes ranking scores without the extra cost of probability calibration.
     return model.decision_function(features)
 
 
@@ -55,6 +58,7 @@ def main():
     features = dataset.data
     target = dataset.target
 
+    # Stratification preserves the malignant/benign ratio in both partitions.
     x_train, x_test, y_train, y_test = train_test_split(
         features,
         target,
@@ -63,6 +67,7 @@ def main():
         stratify=target,
     )
 
+    # Scaling stays inside each pipeline, so it is fitted only on training data.
     models = {
         "Logistic Regression": Pipeline(
             [
@@ -74,6 +79,7 @@ def main():
             ],
             memory=None,
         ),
+        # Limit tree complexity to reduce overfitting while retaining interpretable rules.
         "Decision Tree": DecisionTreeClassifier(
             max_depth=5,
             min_samples_leaf=3,
@@ -120,6 +126,7 @@ def main():
         joblib.dump(model, MODEL_DIR / filename)
         model_files[model_name] = filename
 
+    # Persist the untouched hold-out rows for evaluation in the Streamlit app.
     test_data = x_test.copy()
     test_data[TARGET_COLUMN] = y_test
     test_data.to_csv(BASE_DIR / "test_data.csv", index=False)
