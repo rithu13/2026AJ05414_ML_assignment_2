@@ -142,16 +142,17 @@ with st.sidebar:
             width="stretch",
         )
 
+
 if uploaded_file is None:
-    st.info("Upload test data from the sidebar. The saved hold-out results are shown below.")
+    st.info("Upload test data from the sidebar. Results from the original unseen test data are shown below.")
     saved_results = pd.DataFrame(metadata["metrics"]).T
-    st.subheader("Saved hold-out results")
+    st.subheader("Model Performance on Original Test Data")
     st.dataframe(
         saved_results.style.format("{:.4f}").highlight_max(axis=0, color="#cce5d8"),
         width="stretch",
     )
     winner = saved_results["F1"].idxmax()
-    st.success(f"Highest hold-out F1 score: {winner} ({saved_results.loc[winner, 'F1']:.4f})")
+    st.success(f"Highest test-data F1 score: {winner} ({saved_results.loc[winner, 'F1']:.4f})")
     st.stop()
 
 try:
