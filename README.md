@@ -47,46 +47,40 @@ All models use the same stratified hold-out test set. Logistic Regression, KNN, 
 ### Performance Observations
 
 **Logistic Regression**
-- Achieved top performance: 98.25% accuracy, 0.9954 AUC (highest), 0.9623 MCC
-- The 30 cell-nucleus features are nearly linearly separable after standardization
-- High recall (98.61%) is critical for cancer screening—missing a malignant case is costly
-- Probabilistic outputs enable clinicians to adjust decision thresholds based on risk tolerance
-- Interpretable coefficients reveal which features (e.g., "worst concave points") drive predictions
+- Best overall model with 98.25% accuracy and highest AUC of 0.9954
+- Works well because the features become linearly separable after scaling
+- High recall (98.61%) means it rarely misses malignant cases, which is important for medical diagnosis
+- Also gives probability scores, so we can adjust the threshold if needed
 
 **Decision Tree**
-- Lowest performer: 90.35% accuracy, 0.7969 MCC due to depth-limited rules (max_depth=5)
-- Oversimplifies complex feature interactions present in the tumor measurements
-- Offers full interpretability—each prediction traced through human-readable if-then rules
-- The 9.72% missed recall rate makes it unsuitable for primary diagnosis
-- Best used for explainability and generating initial insights about feature importance
+- Lowest accuracy (90.35%) among all models tested
+- Limited the depth to 5 to prevent overfitting, but this made it too simple for the data
+- The upside is that we can actually see the rules it uses to make decisions
+- Would not use this for actual diagnosis due to lower recall
 
 **KNN (K-Nearest Neighbors)**
-- Second-best performer with highest recall (97.22%) among non-linear models
-- Misses fewer malignant cases due to instance-based local pattern matching
-- Performance sensitive to k=5 choice; requires standardized features for Euclidean distance
-- No explicit model—predictions based on similarity to training instances
-- Computationally expensive at prediction time for large datasets
+- Performed well with 97.22% recall, second only to Logistic Regression and SVM
+- Makes predictions by looking at the 5 nearest training samples
+- Needs scaled features since it uses distance calculations
+- Slower at prediction time compared to other models
 
 **Naive Bayes (Gaussian)**
-- Strong AUC (0.9868) despite violated independence assumption (radius, perimeter, area are correlated)
-- Lower precision (94.44%) results in more false positives
-- In cancer screening, accepting false positives may be preferable to missing true positives
-- Extremely fast training and prediction—suitable for quick baseline comparisons
-- Probabilistic framework provides calibrated confidence scores
+- Decent AUC (0.9868) even though its assumption of independent features is not true here
+- Many features like radius, perimeter, and area are clearly correlated
+- Lower precision means more false alarms, but for cancer screening that might be acceptable
+- Very fast to train and predict
 
 **Support Vector Machine**
-- Matched Logistic Regression: 98.25% accuracy, 0.9623 MCC using RBF kernel
-- Slightly lower AUC (0.9950) suggests marginally less confident probability estimates
-- RBF kernel effectively captures non-linear decision boundaries
-- Higher computational cost during both training and prediction
-- Lacks interpretability—operates as a "black box" classifier
+- Tied with Logistic Regression at 98.25% accuracy
+- Used RBF kernel to handle non-linear patterns in the data
+- Slightly lower AUC (0.9950) compared to Logistic Regression
+- Harder to interpret since we cannot easily see why it made a decision
 
 **Overall Winner: Logistic Regression**
-- Ties SVM on threshold metrics but achieves best AUC (0.9954)
-- Provides interpretable coefficients and calibrated probabilities
-- Efficient inference with minimal computational overhead
-- For clinical decision support, transparency outweighs marginal gains from complex models
-- Recommended for deployment where explainability and regulatory compliance matter
+- Matches SVM on most metrics but has the highest AUC
+- Easy to understand which features matter most by looking at the coefficients
+- Fast predictions and simple to deploy
+- Best choice when we need to explain the model's decisions
 
 ## Live Streamlit App
 
