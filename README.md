@@ -46,14 +46,47 @@ All models use the same stratified hold-out test set. Logistic Regression, KNN, 
 
 ### Performance Observations
 
-| ML Model Name | Observation about Model Performance |
-|---|---|
-| Logistic Regression | Joint-best accuracy, precision, recall, F1, and MCC, with the highest AUC. The strong result indicates that standardized features are close to linearly separable in the transformed feature space. |
-| Decision Tree | Lowest score on every reported metric. Its simple depth-limited rules remain interpretable, but they discard information that the smoother decision boundaries use. |
-| KNN | Strong second tier, with 0.9722 recall and 0.9655 F1. Scaling is essential because predictions depend directly on feature distances. |
-| Naive Bayes | Good AUC despite lower thresholded metrics. Its conditional-independence assumption is restrictive because many tumor measurements are correlated. |
-| Support Vector Machine | Ties Logistic Regression on accuracy, precision, recall, F1, and MCC, while producing a slightly lower AUC. The RBF boundary models non-linearity effectively but is less interpretable. |
-| **Overall winner** | **Logistic Regression.** It ties SVM on the main classification metrics, has the highest AUC (0.9954), and offers simpler interpretation and lower prediction complexity. |
+**Logistic Regression**
+- Achieved top performance: 98.25% accuracy, 0.9954 AUC (highest), 0.9623 MCC
+- The 30 cell-nucleus features are nearly linearly separable after standardization
+- High recall (98.61%) is critical for cancer screening—missing a malignant case is costly
+- Probabilistic outputs enable clinicians to adjust decision thresholds based on risk tolerance
+- Interpretable coefficients reveal which features (e.g., "worst concave points") drive predictions
+
+**Decision Tree**
+- Lowest performer: 90.35% accuracy, 0.7969 MCC due to depth-limited rules (max_depth=5)
+- Oversimplifies complex feature interactions present in the tumor measurements
+- Offers full interpretability—each prediction traced through human-readable if-then rules
+- The 9.72% missed recall rate makes it unsuitable for primary diagnosis
+- Best used for explainability and generating initial insights about feature importance
+
+**KNN (K-Nearest Neighbors)**
+- Second-best performer with highest recall (97.22%) among non-linear models
+- Misses fewer malignant cases due to instance-based local pattern matching
+- Performance sensitive to k=5 choice; requires standardized features for Euclidean distance
+- No explicit model—predictions based on similarity to training instances
+- Computationally expensive at prediction time for large datasets
+
+**Naive Bayes (Gaussian)**
+- Strong AUC (0.9868) despite violated independence assumption (radius, perimeter, area are correlated)
+- Lower precision (94.44%) results in more false positives
+- In cancer screening, accepting false positives may be preferable to missing true positives
+- Extremely fast training and prediction—suitable for quick baseline comparisons
+- Probabilistic framework provides calibrated confidence scores
+
+**Support Vector Machine**
+- Matched Logistic Regression: 98.25% accuracy, 0.9623 MCC using RBF kernel
+- Slightly lower AUC (0.9950) suggests marginally less confident probability estimates
+- RBF kernel effectively captures non-linear decision boundaries
+- Higher computational cost during both training and prediction
+- Lacks interpretability—operates as a "black box" classifier
+
+**Overall Winner: Logistic Regression**
+- Ties SVM on threshold metrics but achieves best AUC (0.9954)
+- Provides interpretable coefficients and calibrated probabilities
+- Efficient inference with minimal computational overhead
+- For clinical decision support, transparency outweighs marginal gains from complex models
+- Recommended for deployment where explainability and regulatory compliance matter
 
 ## Live Streamlit App
 
